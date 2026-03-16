@@ -864,21 +864,25 @@
         }
 
         function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores) {
+            const orientationData = getOrientationData(orientationType);
+            
             const data = {
                 name: userName,
                 email: userEmail,
-                orientationType: getOrientationData(orientationType).name,
-                pastPercent: scores.past,
-                presentPercent: scores.present,
-                futurePercent: scores.future,
+                orientationType: orientationData.name,
+                pastPercent: scores.past.toFixed(1),
+                presentPercent: scores.present.toFixed(1),
+                futurePercent: scores.future.toFixed(1),
                 imbalance: imbalanceDegree,
                 quizType: quizType,
-                pastChallengeWarning: challengeWarnings.past,
-                presentChallengeWarning: challengeWarnings.present,
-                futureChallengeWarning: challengeWarnings.future,
+                pastChallengeWarning: challengeWarnings.past || false,
+                presentChallengeWarning: challengeWarnings.present || false,
+                futureChallengeWarning: challengeWarnings.future || false,
                 answers: answers,
-                domainScores: domainScores
+                domainScores: domainScores || null
             };
+            
+            console.log('Sending data:', data);
             
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
