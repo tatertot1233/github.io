@@ -789,19 +789,19 @@
             
             const totalScore = pastScore + presentScore + futureScore;
             
-            // Use raw scores for comparison, not percentages
+            // Use raw scores for comparison and display
             const scores = {
                 past: pastScore,
                 present: presentScore,
                 future: futureScore
             };
             
-            // Calculate percentages for display only
+            // Calculate percentages for the triangle visualization only
             const pastPercent = (pastScore / totalScore * 100).toFixed(1);
             const presentPercent = (presentScore / totalScore * 100).toFixed(1);
             const futurePercent = (futureScore / totalScore * 100).toFixed(1);
             
-            const displayScores = {
+            const percentScores = {
                 past: parseFloat(pastPercent),
                 present: parseFloat(presentPercent),
                 future: parseFloat(futurePercent)
@@ -865,10 +865,10 @@
                 domainScores = calculateDomainScores();
             }
             
-            displayResults(orientationType, displayScores, imbalanceDegree, domainScores, challengeWarnings);
+            displayResults(orientationType, scores, percentScores, imbalanceDegree, domainScores, challengeWarnings);
             
             // Send data to Google Sheets
-            sendDataToGoogleSheets(orientationType, displayScores, imbalanceDegree, challengeWarnings, domainScores);
+            sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores);
         }
 
         function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores) {
@@ -878,9 +878,9 @@
                 name: userName,
                 email: userEmail,
                 orientationType: orientationData.name,
-                pastPercent: scores.past.toFixed(1),
-                presentPercent: scores.present.toFixed(1),
-                futurePercent: scores.future.toFixed(1),
+                pastPercent: scores.past,
+                presentPercent: scores.present,
+                futurePercent: scores.future,
                 imbalance: imbalanceDegree,
                 quizType: quizType,
                 pastChallengeWarning: challengeWarnings.past || false,
@@ -947,7 +947,7 @@
             return domainResults;
         }
 
-        function displayResults(orientationType, scores, imbalanceDegree, domainScores, challengeWarnings) {
+        function displayResults(orientationType, scores, percentScores, imbalanceDegree, domainScores, challengeWarnings) {
             document.getElementById('quizQuestions').classList.add('hidden');
             const resultsDiv = document.getElementById('results');
             resultsDiv.classList.remove('hidden');
@@ -961,35 +961,35 @@
                 </div>
                 
                 <div class="triangle-container">
-                    ${createTriangleSVG(scores)}
+                    ${createTriangleSVG(percentScores)}
                 </div>
                 
                 <div class="score-bars">
                     <div class="score-bar">
                         <div class="score-label">
                             <span>Past</span>
-                            <span>${scores.past}%</span>
+                            <span>${scores.past} points</span>
                         </div>
                         <div class="bar-container">
-                            <div class="bar-fill past" style="width: ${scores.past}%">${scores.past}%</div>
+                            <div class="bar-fill past" style="width: ${percentScores.past}%">${scores.past}</div>
                         </div>
                     </div>
                     <div class="score-bar">
                         <div class="score-label">
                             <span>Present</span>
-                            <span>${scores.present}%</span>
+                            <span>${scores.present} points</span>
                         </div>
                         <div class="bar-container">
-                            <div class="bar-fill present" style="width: ${scores.present}%">${scores.present}%</div>
+                            <div class="bar-fill present" style="width: ${percentScores.present}%">${scores.present}</div>
                         </div>
                     </div>
                     <div class="score-bar">
                         <div class="score-label">
                             <span>Future</span>
-                            <span>${scores.future}%</span>
+                            <span>${scores.future} points</span>
                         </div>
                         <div class="bar-container">
-                            <div class="bar-fill future" style="width: ${scores.future}%">${scores.future}%</div>
+                            <div class="bar-fill future" style="width: ${percentScores.future}%">${scores.future}</div>
                         </div>
                     </div>
                 </div>
