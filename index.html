@@ -788,47 +788,56 @@
             }
             
             const totalScore = pastScore + presentScore + futureScore;
+            
+            // Use raw scores for comparison, not percentages
+            const scores = {
+                past: pastScore,
+                present: presentScore,
+                future: futureScore
+            };
+            
+            // Calculate percentages for display only
             const pastPercent = (pastScore / totalScore * 100).toFixed(1);
             const presentPercent = (presentScore / totalScore * 100).toFixed(1);
             const futurePercent = (futureScore / totalScore * 100).toFixed(1);
             
-            // Determine orientation
-            const scores = {
+            const displayScores = {
                 past: parseFloat(pastPercent),
                 present: parseFloat(presentPercent),
                 future: parseFloat(futurePercent)
             };
             
+            // Determine orientation using RAW SCORES
             const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
             const highest = sorted[0][0];
+            const highestScore = sorted[0][1];
             const secondHighest = sorted[1][0];
+            const secondScore = sorted[1][1];
             const lowest = sorted[2][0];
+            const lowestScore = sorted[2][1];
             
-            const spread = sorted[0][1] - sorted[2][1];
+            const pointDifference = highestScore - lowestScore;
             
             let orientationType;
             let imbalanceDegree;
             
-            // Determine imbalance
-            if (spread < 15) {
+            // Determine imbalance based on point spread
+            if (pointDifference < 7) {
                 imbalanceDegree = 'slight';
-            } else if (spread < 30) {
+            } else if (pointDifference < 11) {
                 imbalanceDegree = 'moderate';
-            } else if (spread < 45) {
+            } else if (pointDifference < 15) {
                 imbalanceDegree = 'strong';
             } else {
                 imbalanceDegree = 'extreme';
             }
             
             // Determine orientation type
-            // Balanced: all three within 5% of each other
-            const minScore = Math.min(scores.past, scores.present, scores.future);
-            const maxScore = Math.max(scores.past, scores.present, scores.future);
-            
-            if (maxScore - minScore <= 5) {
+            // Balanced: all three scores within 5 points of each other
+            if (pointDifference <= 5) {
                 orientationType = 'balanced';
-            } else if (sorted[0][1] - sorted[1][1] <= 3) {
-                // Combination type - top two within 3 percentage points
+            } else if (highestScore - secondScore <= 5) {
+                // Combination type - top two within 5 points
                 if ((highest === 'past' && secondHighest === 'future') || (highest === 'future' && secondHighest === 'past')) {
                     orientationType = 'strategist';
                 } else if ((highest === 'past' && secondHighest === 'present') || (highest === 'present' && secondHighest === 'past')) {
@@ -856,10 +865,10 @@
                 domainScores = calculateDomainScores();
             }
             
-            displayResults(orientationType, scores, imbalanceDegree, domainScores, challengeWarnings);
+            displayResults(orientationType, displayScores, imbalanceDegree, domainScores, challengeWarnings);
             
             // Send data to Google Sheets
-            sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores);
+            sendDataToGoogleSheets(orientationType, displayScores, imbalanceDegree, challengeWarnings, domainScores);
         }
 
         function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores) {
