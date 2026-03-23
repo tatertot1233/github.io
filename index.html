@@ -750,39 +750,38 @@
             // Track challenge question scores
             let pastChallengeScore = 0, presentChallengeScore = 0, futureChallengeScore = 0;
             
-            // Challenge question indices (questions 16-20 for past, 36-40 for present, 56-60 for future)
-            const pastChallengeIndices = [15, 16, 17, 18, 19]; // 0-indexed
+            // Challenge question indices in the ORIGINAL mainQuestions array (0-indexed)
+            const pastChallengeIndices = [15, 16, 17, 18, 19];
             const presentChallengeIndices = [35, 36, 37, 38, 39];
             const futureChallengeIndices = [55, 56, 57, 58, 59];
             
-            // Calculate main scores
+            // Calculate scores using the question's type property
             for (let i = 0; i < allQuestions.length; i++) {
                 const question = allQuestions[i];
                 const answer = answers[i];
+                
+                if (!answer) continue;
                 
                 if (question.type === 'past') {
                     pastScore += answer;
                     pastCount++;
                     
-                    // Check if this is a challenge question (from main quiz only)
-                    const originalIndex = mainQuestions.findIndex(q => q.text === question.text);
-                    if (pastChallengeIndices.includes(originalIndex)) {
+                    // Check if this is a challenge question based on originalIndex
+                    if (question.originalIndex !== undefined && pastChallengeIndices.includes(question.originalIndex)) {
                         pastChallengeScore += answer;
                     }
                 } else if (question.type === 'present') {
                     presentScore += answer;
                     presentCount++;
                     
-                    const originalIndex = mainQuestions.findIndex(q => q.text === question.text);
-                    if (presentChallengeIndices.includes(originalIndex)) {
+                    if (question.originalIndex !== undefined && presentChallengeIndices.includes(question.originalIndex)) {
                         presentChallengeScore += answer;
                     }
                 } else if (question.type === 'future') {
                     futureScore += answer;
                     futureCount++;
                     
-                    const originalIndex = mainQuestions.findIndex(q => q.text === question.text);
-                    if (futureChallengeIndices.includes(originalIndex)) {
+                    if (question.originalIndex !== undefined && futureChallengeIndices.includes(question.originalIndex)) {
                         futureChallengeScore += answer;
                     }
                 }
