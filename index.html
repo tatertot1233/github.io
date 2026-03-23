@@ -894,13 +894,19 @@
             const totalAdvancedQuestions = 50;
             const totalQuestions = quizType === 'advanced' ? totalMainQuestions + totalAdvancedQuestions : totalMainQuestions;
             
-            const orderedAnswers = new Array(totalQuestions).fill(null);
+            const orderedAnswers = new Array(totalQuestions).fill(0);
+            
+            console.log('Starting reordering. Total questions:', totalQuestions);
+            console.log('allQuestions length:', allQuestions.length);
+            console.log('answers length:', answers.length);
             
             for (let i = 0; i < allQuestions.length; i++) {
                 const question = allQuestions[i];
                 const answer = answers[i];
                 
-                if (question.originalIndex !== undefined && question.originalIndex < totalQuestions) {
+                console.log(`Reordering: i=${i}, originalIndex=${question.originalIndex}, answer=${answer}`);
+                
+                if (question.originalIndex !== undefined && answer !== null) {
                     orderedAnswers[question.originalIndex] = answer;
                 }
             }
@@ -924,7 +930,7 @@
                 domainScores: domainScores || null
             };
             
-            console.log('Sending data:', data);
+            console.log('Final data being sent:', data);
             
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
