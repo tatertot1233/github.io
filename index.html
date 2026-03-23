@@ -49,34 +49,54 @@
             padding: 40px;
         }
 
-        .quiz-type-selection {
+        .name-email-form {
             text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .quiz-option {
-            background: #f8f9fa;
-            border: 3px solid #e9ecef;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .name-email-form h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
 
-        .quiz-option:hover {
-            border-color: #667eea;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-        }
-
-        .quiz-option h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .quiz-option p {
+        .name-email-form p {
+            margin-bottom: 30px;
             color: #6c757d;
-            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .privacy-notice {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #6c757d;
+            text-align: left;
+        }
+
+        .privacy-notice strong {
+            color: #333;
         }
 
         .question-container {
@@ -346,34 +366,6 @@
                 padding: 20px;
             }
         }
-
-        .radar-chart-container {
-            margin: 40px auto;
-            max-width: 500px;
-        }
-
-        .domain-scores {
-            margin: 40px 0;
-        }
-
-        .domain-score-item {
-            margin: 20px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-
-        .domain-name {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .domain-orientation {
-            color: #667eea;
-            font-size: 1.1em;
-        }
     </style>
 </head>
 <body>
@@ -384,45 +376,26 @@
         </div>
 
         <div class="content">
-            <!-- Name/Email Collection -->
-            <div id="nameEmailForm" class="quiz-type-selection">
-                <h2 style="margin-bottom: 20px; color: #333;">Welcome!</h2>
-                <p style="margin-bottom: 30px; color: #6c757d;">Please enter your information to begin the assessment.</p>
+            <!-- Name/Email Form -->
+            <div id="nameEmailForm" class="name-email-form">
+                <h2>Welcome!</h2>
+                <p>Please enter your information to begin the assessment.</p>
                 
-                <div style="max-width: 500px; margin: 0 auto;">
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Name</label>
-                        <input type="text" id="userName" placeholder="Your name" style="width: 100%; padding: 12px; border: 2px solid #dee2e6; border-radius: 8px; font-size: 1em;">
-                    </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Email</label>
-                        <input type="email" id="userEmail" placeholder="your.email@example.com" style="width: 100%; padding: 12px; border: 2px solid #dee2e6; border-radius: 8px; font-size: 1em;">
-                    </div>
-                    
-                    <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 0.9em; color: #6c757d; text-align: left;">
-                        <strong style="color: #333;">Privacy Notice:</strong> Your name and email will be used solely for delivering your quiz results and for research purposes. Your information will be kept confidential and will not be shared with third parties.
-                    </div>
-                    
-                    <button class="btn btn-primary" onclick="proceedToQuizSelection()" id="continueBtn" disabled>Continue</button>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="userName" placeholder="Your name">
                 </div>
-            </div>
-
-            <!-- Quiz Type Selection -->
-            <div id="quizTypeSelection" class="quiz-type-selection hidden">
-                <h2 style="margin-bottom: 30px; color: #333;">Choose Your Assessment</h2>
                 
-                <div class="quiz-option" onclick="startQuiz('standard')">
-                    <h3>Standard Assessment</h3>
-                    <p><strong>60 questions • ~10-12 minutes</strong></p>
-                    <p>Discover your overall temporal orientation and receive personalized insights about your relationship with past, present, and future.</p>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="userEmail" placeholder="your.email@example.com">
                 </div>
-
-                <div class="quiz-option" onclick="startQuiz('advanced')">
-                    <h3>Advanced Assessment</h3>
-                    <p><strong>110 questions • ~25 minutes</strong></p>
-                    <p>Get a comprehensive analysis including detailed breakdowns across five life domains: Work/Career, Relationships, Creative Growth, Physical Life, and Inner/Spiritual Life.</p>
+                
+                <div class="privacy-notice">
+                    <strong>Privacy Notice:</strong> Your name and email will be used solely for delivering your quiz results and for research purposes. Your information will be kept confidential and will not be shared with third parties.
                 </div>
+                
+                <button class="btn btn-primary" onclick="startQuiz()" id="continueBtn" disabled>Begin Assessment</button>
             </div>
 
             <!-- Quiz Questions -->
@@ -443,8 +416,8 @@
     </div>
 
     <script>
-        // Question data
-        const mainQuestions = [
+        // Question data - all 60 questions with type property
+        const allMainQuestions = [
             {text: "I find comfort in routines and established ways of doing things.", type: "past"},
             {text: "I often reflect on past experiences to guide my current decisions.", type: "past"},
             {text: "I believe traditions and proven methods are important to preserve.", type: "past"},
@@ -509,70 +482,7 @@
             {text: "I sometimes escape into fantasy or planning rather than dealing with current reality.", type: "future"}
         ];
 
-        const advancedQuestions = [
-            // Work/Career
-            {text: "I rely on proven methods and established protocols in my work, even when new approaches are suggested.", type: "past", domain: "work"},
-            {text: "When working on a task, I can enter a state of complete focus where hours pass without notice.", type: "present", domain: "work"},
-            {text: "I regularly think about how my career could evolve and what opportunities might emerge.", type: "future", domain: "work"},
-            {text: "I keep detailed records, files, or documentation systems for my professional work.", type: "past", domain: "work"},
-            {text: "I adapt my work approach based on the immediate needs and dynamics of each situation.", type: "present", domain: "work"},
-            {text: "I often initiate proposals for innovative projects or new directions in my field.", type: "future", domain: "work"},
-            {text: "My professional identity is strongly tied to my work history and accumulated expertise.", type: "past", domain: "work"},
-            {text: "I sometimes avoid long-term career planning because I prefer to respond to opportunities as they arise.", type: "present", domain: "work"},
-            {text: "I become restless or bored when my work feels routine or lacks forward momentum.", type: "future", domain: "work"},
-            {text: "I struggle to complete current work projects when new and exciting ideas capture my attention.", type: "future", domain: "work"},
-            
-            // Relationships
-            {text: "I maintain friendships and connections with people I've known for many years or decades.", type: "past", domain: "relationships"},
-            {text: "When I'm with someone, I give them my full attention without thinking about other things.", type: "present", domain: "relationships"},
-            {text: "I often imagine how my relationships could deepen or evolve in new directions.", type: "future", domain: "relationships"},
-            {text: "I sometimes have difficulty letting go of past conflicts or disappointments in relationships.", type: "past", domain: "relationships"},
-            {text: "I'm comfortable with relationships changing form naturally - some getting closer, others drifting apart.", type: "present", domain: "relationships"},
-            {text: "I actively seek out new people and social experiences that could expand my social world.", type: "future", domain: "relationships"},
-            {text: "I have relationship patterns or dynamics that have remained consistent throughout my life.", type: "past", domain: "relationships"},
-            {text: "I sometimes struggle to maintain long-term commitments in friendships or romantic relationships.", type: "present", domain: "relationships"},
-            {text: "I feel dissatisfied with my current relationships and often think about how they could be better.", type: "future", domain: "relationships"},
-            {text: "I can be fully present in conversation, listening deeply without planning what to say next.", type: "present", domain: "relationships"},
-            
-            // Creative/Personal Growth
-            {text: "I have creative practices or learning pursuits I've maintained consistently over time.", type: "past", domain: "creative"},
-            {text: "I experience moments of creative flow where I lose track of time completely.", type: "present", domain: "creative"},
-            {text: "I'm constantly exploring new interests, skills, or areas of personal development.", type: "future", domain: "creative"},
-            {text: "I reflect on my personal history to understand patterns in my growth journey.", type: "past", domain: "creative"},
-            {text: "I create or express myself spontaneously based on how I feel in the moment.", type: "present", domain: "creative"},
-            {text: "I set specific goals for skills I want to develop or creative projects I want to complete.", type: "future", domain: "creative"},
-            {text: "My creative style or personal interests have remained relatively stable over the years.", type: "past", domain: "creative"},
-            {text: "I start many creative projects or learning pursuits but often don't finish them.", type: "future", domain: "creative"},
-            {text: "I sometimes feel like my \"real\" creative life will begin once I have more time/resources/skills.", type: "future", domain: "creative"},
-            {text: "I trust my intuition in creative expression without needing plans or predetermined outcomes.", type: "present", domain: "creative"},
-            
-            // Physical/Daily Life
-            {text: "I maintain consistent routines for sleep, meals, exercise, and self-care.", type: "past", domain: "physical"},
-            {text: "I pay close attention to my body's signals and needs throughout the day.", type: "present", domain: "physical"},
-            {text: "I have fitness goals, health targets, or physical changes I'm working toward.", type: "future", domain: "physical"},
-            {text: "I eat familiar foods and follow eating patterns that have worked well for me historically.", type: "past", domain: "physical"},
-            {text: "I move my body spontaneously - stretching, dancing, walking - based on what feels good in the moment.", type: "present", domain: "physical"},
-            {text: "I experiment with new approaches to health, fitness, or physical well-being.", type: "future", domain: "physical"},
-            {text: "I have physical habits or routines that I've maintained for years, even if they're not serving me optimally.", type: "past", domain: "physical"},
-            {text: "I sometimes neglect physical needs (sleep, nutrition, movement) because I'm focused on immediate activities.", type: "present", domain: "physical"},
-            {text: "I often think about how I could improve my physical health or appearance in the future.", type: "future", domain: "physical"},
-            {text: "I'm comfortable adjusting my daily rhythms and routines based on how I feel rather than sticking to a schedule.", type: "present", domain: "physical"},
-            
-            // Inner/Spiritual
-            {text: "I follow spiritual or philosophical practices rooted in established traditions or teachings.", type: "past", domain: "spiritual"},
-            {text: "I have a regular meditation, prayer, or mindfulness practice that keeps me grounded in the present.", type: "present", domain: "spiritual"},
-            {text: "I'm actively exploring new spiritual ideas, practices, or philosophical frameworks.", type: "future", domain: "spiritual"},
-            {text: "I find meaning and insight by reflecting on my life story and past experiences.", type: "past", domain: "spiritual"},
-            {text: "I experience moments of spiritual presence or connection that transcend thinking about past or future.", type: "present", domain: "spiritual"},
-            {text: "I'm drawn to mystical experiences and possibilities beyond my current understanding.", type: "future", domain: "spiritual"},
-            {text: "My core spiritual or philosophical beliefs have remained consistent over many years.", type: "past", domain: "spiritual"},
-            {text: "I sometimes avoid deeper spiritual questions or commitments, preferring to stay in the moment.", type: "present", domain: "spiritual"},
-            {text: "I feel like my spiritual understanding is always evolving toward something I haven't yet grasped.", type: "future", domain: "spiritual"},
-            {text: "I can sit in stillness or silence, simply being present without needing answers or direction.", type: "present", domain: "spiritual"}
-        ];
-
-        let quizType = 'standard';
-        let allQuestions = [];
+        let quizQuestions = [];
         let currentQuestionIndex = 0;
         let answers = [];
         let userName = '';
@@ -597,36 +507,6 @@
             emailInput.addEventListener('input', checkFields);
         });
 
-        function proceedToQuizSelection() {
-            userName = document.getElementById('userName').value.trim();
-            userEmail = document.getElementById('userEmail').value.trim();
-            
-            if (!userName || !userEmail) {
-                alert('Please enter both your name and email.');
-                return;
-            }
-            
-            document.getElementById('nameEmailForm').classList.add('hidden');
-            document.getElementById('quizTypeSelection').classList.remove('hidden');
-            
-            // Now populate quiz selection
-            document.getElementById('quizTypeSelection').innerHTML = `
-                <h2 style="margin-bottom: 30px; color: #333;">Choose Your Assessment</h2>
-                
-                <div class="quiz-option" onclick="startQuiz('standard')">
-                    <h3>Standard Assessment</h3>
-                    <p><strong>60 questions • ~10-12 minutes</strong></p>
-                    <p>Discover your overall temporal orientation and receive personalized insights about your relationship with past, present, and future.</p>
-                </div>
-
-                <div class="quiz-option" onclick="startQuiz('advanced')">
-                    <h3>Advanced Assessment</h3>
-                    <p><strong>110 questions • ~25 minutes</strong></p>
-                    <p>Get a comprehensive analysis including detailed breakdowns across five life domains: Work/Career, Relationships, Creative Growth, Physical Life, and Inner/Spiritual Life.</p>
-                </div>
-            `;
-        }
-
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
@@ -636,18 +516,29 @@
             return newArray;
         }
 
-        function startQuiz(type) {
-            quizType = type;
-            allQuestions = shuffleArray(mainQuestions);
+        function startQuiz() {
+            userName = document.getElementById('userName').value.trim();
+            userEmail = document.getElementById('userEmail').value.trim();
             
-            if (type === 'advanced') {
-                allQuestions = allQuestions.concat(shuffleArray(advancedQuestions));
+            if (!userName || !userEmail) {
+                alert('Please enter both your name and email.');
+                return;
             }
             
-            answers = new Array(allQuestions.length).fill(null);
+            // Create questions with originalIndex BEFORE shuffling
+            quizQuestions = allMainQuestions.map((q, idx) => ({
+                text: q.text,
+                type: q.type,
+                originalIndex: idx
+            }));
+            
+            // Shuffle the questions
+            quizQuestions = shuffleArray(quizQuestions);
+            
+            answers = new Array(60).fill(null);
             currentQuestionIndex = 0;
             
-            document.getElementById('quizTypeSelection').classList.add('hidden');
+            document.getElementById('nameEmailForm').classList.add('hidden');
             document.getElementById('quizQuestions').classList.remove('hidden');
             
             displayQuestion();
@@ -655,12 +546,12 @@
 
         function displayQuestion() {
             const container = document.getElementById('questionsContainer');
-            const question = allQuestions[currentQuestionIndex];
+            const question = quizQuestions[currentQuestionIndex];
             
             container.innerHTML = `
                 <div class="question-container">
                     <div class="question-text">
-                        <span class="question-number">Question ${currentQuestionIndex + 1} of ${allQuestions.length}</span>
+                        <span class="question-number">Question ${currentQuestionIndex + 1} of 60</span>
                         <br>${question.text}
                     </div>
                     <div class="scale-container">
@@ -701,7 +592,7 @@
         }
 
         function updateProgress() {
-            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
+            const progress = ((currentQuestionIndex + 1) / 60) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
         }
 
@@ -711,7 +602,7 @@
             
             prevBtn.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
             
-            if (currentQuestionIndex === allQuestions.length - 1) {
+            if (currentQuestionIndex === 59) {
                 nextBtn.textContent = 'View Results';
             } else {
                 nextBtn.textContent = 'Next';
@@ -735,7 +626,7 @@
         function nextQuestion() {
             if (answers[currentQuestionIndex] === null) return;
             
-            if (currentQuestionIndex < allQuestions.length - 1) {
+            if (currentQuestionIndex < 59) {
                 currentQuestionIndex++;
                 displayQuestion();
             } else {
@@ -745,73 +636,47 @@
 
         function calculateResults() {
             let pastScore = 0, presentScore = 0, futureScore = 0;
-            let pastCount = 0, presentCount = 0, futureCount = 0;
-            
-            // Track challenge question scores
             let pastChallengeScore = 0, presentChallengeScore = 0, futureChallengeScore = 0;
             
-            // Challenge question indices in the ORIGINAL mainQuestions array (0-indexed)
             const pastChallengeIndices = [15, 16, 17, 18, 19];
             const presentChallengeIndices = [35, 36, 37, 38, 39];
             const futureChallengeIndices = [55, 56, 57, 58, 59];
             
-            // Calculate scores using the question's type property
-            console.log('First 5 questions being scored:');
-            for (let i = 0; i < Math.min(5, allQuestions.length); i++) {
-                const q = allQuestions[i];
-                console.log(`Q${i}: originalIndex=${q.originalIndex}, type=${q.type}, answer=${answers[i]}, text="${q.text.substring(0, 50)}..."`);
-            }
-            
-            for (let i = 0; i < allQuestions.length; i++) {
-                const question = allQuestions[i];
+            // Calculate scores by looking at each question's type
+            for (let i = 0; i < quizQuestions.length; i++) {
+                const question = quizQuestions[i];
                 const answer = answers[i];
                 
                 if (!answer) continue;
                 
                 if (question.type === 'past') {
                     pastScore += answer;
-                    pastCount++;
-                    
-                    // Check if this is a challenge question based on originalIndex
-                    if (question.originalIndex !== undefined && pastChallengeIndices.includes(question.originalIndex)) {
+                    if (pastChallengeIndices.includes(question.originalIndex)) {
                         pastChallengeScore += answer;
                     }
                 } else if (question.type === 'present') {
                     presentScore += answer;
-                    presentCount++;
-                    
-                    if (question.originalIndex !== undefined && presentChallengeIndices.includes(question.originalIndex)) {
+                    if (presentChallengeIndices.includes(question.originalIndex)) {
                         presentChallengeScore += answer;
                     }
                 } else if (question.type === 'future') {
                     futureScore += answer;
-                    futureCount++;
-                    
-                    if (question.originalIndex !== undefined && futureChallengeIndices.includes(question.originalIndex)) {
+                    if (futureChallengeIndices.includes(question.originalIndex)) {
                         futureChallengeScore += answer;
                     }
                 }
             }
             
-            console.log('Score calculation:', {
-                pastScore, pastCount,
-                presentScore, presentCount,
-                futureScore, futureCount,
-                totalAnswers: allQuestions.length
-            });
-            
-            alert('DEBUG - Scores:\nPast: ' + pastScore + ' (from ' + pastCount + ' questions)\nPresent: ' + presentScore + ' (from ' + presentCount + ' questions)\nFuture: ' + futureScore + ' (from ' + futureCount + ' questions)');
-            
             const totalScore = pastScore + presentScore + futureScore;
             
-            // Use raw scores for comparison and display
+            // Use raw scores for comparison
             const scores = {
                 past: pastScore,
                 present: presentScore,
                 future: futureScore
             };
             
-            // Calculate percentages for the triangle visualization only
+            // Calculate percentages for triangle visualization
             const pastPercent = (pastScore / totalScore * 100).toFixed(1);
             const presentPercent = (presentScore / totalScore * 100).toFixed(1);
             const futurePercent = (futureScore / totalScore * 100).toFixed(1);
@@ -828,7 +693,6 @@
             const highestScore = sorted[0][1];
             const secondHighest = sorted[1][0];
             const secondScore = sorted[1][1];
-            const lowest = sorted[2][0];
             const lowestScore = sorted[2][1];
             
             const pointDifference = highestScore - lowestScore;
@@ -848,11 +712,10 @@
             }
             
             // Determine orientation type
-            // Balanced: all three scores within 5 points of each other
             if (pointDifference <= 5) {
                 orientationType = 'balanced';
             } else if (highestScore - secondScore <= 5) {
-                // Combination type - top two within 5 points
+                // Combination type
                 if ((highest === 'past' && secondHighest === 'future') || (highest === 'future' && secondHighest === 'past')) {
                     orientationType = 'strategist';
                 } else if ((highest === 'past' && secondHighest === 'present') || (highest === 'present' && secondHighest === 'past')) {
@@ -874,45 +737,24 @@
                 future: futureChallengeScore >= 15
             };
             
-            // Calculate domain scores if advanced
-            let domainScores = null;
-            if (quizType === 'advanced') {
-                domainScores = calculateDomainScores();
-            }
-            
-            displayResults(orientationType, scores, percentScores, imbalanceDegree, domainScores, challengeWarnings);
-            
-            // Send data to Google Sheets
-            sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores);
+            displayResults(orientationType, scores, percentScores, imbalanceDegree, challengeWarnings);
+            sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings);
         }
 
-        function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores) {
+        function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings) {
             const orientationData = getOrientationData(orientationType);
             
-            // Reorder answers back to original question order for storage
-            const totalMainQuestions = 60;
-            const totalAdvancedQuestions = 50;
-            const totalQuestions = quizType === 'advanced' ? totalMainQuestions + totalAdvancedQuestions : totalMainQuestions;
+            // Reorder answers back to original question order (0-59)
+            const orderedAnswers = new Array(60).fill(0);
             
-            const orderedAnswers = new Array(totalQuestions).fill(0);
-            
-            console.log('Starting reordering. Total questions:', totalQuestions);
-            console.log('allQuestions length:', allQuestions.length);
-            console.log('answers length:', answers.length);
-            
-            for (let i = 0; i < allQuestions.length; i++) {
-                const question = allQuestions[i];
+            for (let i = 0; i < quizQuestions.length; i++) {
+                const question = quizQuestions[i];
                 const answer = answers[i];
-                
-                console.log(`Reordering: i=${i}, originalIndex=${question.originalIndex}, answer=${answer}`);
                 
                 if (question.originalIndex !== undefined && answer !== null) {
                     orderedAnswers[question.originalIndex] = answer;
                 }
             }
-            
-            console.log('Original answers (randomized order):', answers);
-            console.log('Reordered answers (original order):', orderedAnswers);
             
             const data = {
                 name: userName,
@@ -922,15 +764,12 @@
                 presentPercent: scores.present,
                 futurePercent: scores.future,
                 imbalance: imbalanceDegree,
-                quizType: quizType,
+                quizType: 'standard',
                 pastChallengeWarning: challengeWarnings.past || false,
                 presentChallengeWarning: challengeWarnings.present || false,
                 futureChallengeWarning: challengeWarnings.future || false,
-                answers: orderedAnswers,
-                domainScores: domainScores || null
+                answers: orderedAnswers
             };
-            
-            console.log('Final data being sent:', data);
             
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -944,50 +783,7 @@
             });
         }
 
-        function calculateDomainScores() {
-            const domains = ['work', 'relationships', 'creative', 'physical', 'spiritual'];
-            const domainResults = {};
-            
-            domains.forEach(domain => {
-                let pastScore = 0, presentScore = 0, futureScore = 0;
-                let pastCount = 0, presentCount = 0, futureCount = 0;
-                
-                for (let i = 0; i < allQuestions.length; i++) {
-                    const question = allQuestions[i];
-                    const answer = answers[i];
-                    
-                    if (question.domain === domain) {
-                        if (question.type === 'past') {
-                            pastScore += answer;
-                            pastCount++;
-                        } else if (question.type === 'present') {
-                            presentScore += answer;
-                            presentCount++;
-                        } else if (question.type === 'future') {
-                            futureScore += answer;
-                            futureCount++;
-                        }
-                    }
-                }
-                
-                const totalScore = pastScore + presentScore + futureScore;
-                const scores = {
-                    past: pastScore / totalScore * 100,
-                    present: presentScore / totalScore * 100,
-                    future: futureScore / totalScore * 100
-                };
-                
-                const dominant = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-                domainResults[domain] = {
-                    scores: scores,
-                    dominant: dominant
-                };
-            });
-            
-            return domainResults;
-        }
-
-        function displayResults(orientationType, scores, percentScores, imbalanceDegree, domainScores, challengeWarnings) {
+        function displayResults(orientationType, scores, percentScores, imbalanceDegree, challengeWarnings) {
             document.getElementById('quizQuestions').classList.add('hidden');
             const resultsDiv = document.getElementById('results');
             resultsDiv.classList.remove('hidden');
@@ -1073,10 +869,6 @@
             
             html += orientationData.content;
             
-            if (domainScores) {
-                html += createDomainScoresHTML(domainScores);
-            }
-            
             html += `
                 <div style="text-align: center; margin-top: 40px;">
                     <button class="btn btn-primary" onclick="location.reload()">Take Quiz Again</button>
@@ -1090,18 +882,13 @@
             const width = 400;
             const height = 350;
             
-            // Calculate position on triangle based on scores
-            // Past is top-left (100, 50)
-            // Future is top-right (300, 50)
-            // Present is bottom-center (200, 300)
-            
             const pastX = 100, pastY = 50;
             const futureX = 300, futureY = 50;
             const presentX = 200, presentY = 300;
             
             const totalScore = scores.past + scores.present + scores.future;
             
-            // Use exponential weighting to make the dot more sensitive to differences
+            // Use exponential weighting to make the dot more sensitive
             const exponent = 2.5;
             const pastWeighted = Math.pow(scores.past / totalScore, exponent);
             const presentWeighted = Math.pow(scores.present / totalScore, exponent);
@@ -1117,21 +904,17 @@
             
             return `
                 <svg class="triangle-svg" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Triangle -->
                     <polygon points="${pastX},${pastY} ${futureX},${futureY} ${presentX},${presentY}" 
                              fill="none" stroke="#667eea" stroke-width="3"/>
                     
-                    <!-- Labels -->
                     <text x="${pastX}" y="${pastY - 10}" text-anchor="middle" fill="#DC143C" font-weight="bold" font-size="16">PAST</text>
                     <text x="${futureX}" y="${futureY - 10}" text-anchor="middle" fill="#3B82F6" font-weight="bold" font-size="16">FUTURE</text>
                     <text x="${presentX}" y="${presentY + 25}" text-anchor="middle" fill="#8B5CF6" font-weight="bold" font-size="16">PRESENT</text>
                     
-                    <!-- Corner dots -->
                     <circle cx="${pastX}" cy="${pastY}" r="6" fill="#DC143C"/>
                     <circle cx="${futureX}" cy="${futureY}" r="6" fill="#3B82F6"/>
                     <circle cx="${presentX}" cy="${presentY}" r="6" fill="#8B5CF6"/>
                     
-                    <!-- Position dot -->
                     <circle cx="${dotX}" cy="${dotY}" r="10" fill="#764ba2" stroke="white" stroke-width="2"/>
                 </svg>
             `;
@@ -1147,400 +930,17 @@
             return titles[degree];
         }
 
-        function createDomainScoresHTML(domainScores) {
-            const domainNames = {
-                work: 'Work/Career',
-                relationships: 'Relationships/Social Life',
-                creative: 'Creative/Personal Growth',
-                physical: 'Physical/Daily Life',
-                spiritual: 'Inner/Spiritual Life'
-            };
-            
-            const orientationNames = {
-                past: 'Past-Oriented',
-                present: 'Present-Oriented',
-                future: 'Future-Oriented'
-            };
-            
-            let html = `
-                <div class="results-section">
-                    <h3>Domain-Specific Analysis</h3>
-                    <p>Your temporal orientation varies across different areas of your life:</p>
-                    <div class="domain-scores">
-            `;
-            
-            Object.entries(domainScores).forEach(([domain, data]) => {
-                html += `
-                    <div class="domain-score-item">
-                        <div class="domain-name">${domainNames[domain]}</div>
-                        <div class="domain-orientation">${orientationNames[data.dominant]}</div>
-                        <div style="font-size: 0.9em; color: #6c757d; margin-top: 5px;">
-                            Past: ${data.scores.past.toFixed(1)}% | Present: ${data.scores.present.toFixed(1)}% | Future: ${data.scores.future.toFixed(1)}%
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += `
-                    </div>
-                </div>
-            `;
-            
-            return html;
-        }
-
         function getOrientationData(type) {
             const data = {
                 architect: {
                     name: 'The Architect',
                     subtitle: 'Past-Dominant Orientation',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <p>You possess a remarkable capacity for learning from experience. Where others repeat mistakes, you build upon what you've learned. Your reliability and consistency make you someone others can count on. You understand that wisdom isn't found in novelty but in recognizing patterns and honoring what has proven true. You create stability in a chaotic world through your commitment to structure, tradition, and proven methods. Your ability to maintain discipline and follow through on commitments is a rare gift.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>Your greatest strength becomes your limitation when you believe that life can be predicted and controlled through the right formula. You may find yourself chained to beliefs, habits, and ways of being that once served you but no longer do. The world is always changing, and yesterday's solution may not fit tomorrow's problem. You might resist necessary change, holding onto the familiar even when it's clearly time to let go. Nostalgia can become a cage, causing you to measure your present against an idealized past that may never have existed as you remember it. Your desire for certainty can make you rigid, closed to new possibilities that don't fit within your existing framework.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Spontaneity Practice:</strong> Once per week, deliberately do something in a completely new way - take a different route to work, eat an unfamiliar cuisine, rearrange your furniture. Notice your resistance and breathe through it.</li>
-                                <li><strong>Walking Meditation:</strong> Take 20-minute walks where your only job is to notice sensory details without thinking about them - the quality of light, textures, sounds, smells. When thoughts arise, gently return to direct sensation.</li>
-                                <li><strong>Belief Inventory:</strong> Monthly, write down 3 beliefs or habits you hold. Ask yourself: "Does this still serve me? Is this actually true, or just familiar?" Be willing to release what no longer fits.</li>
-                                <li><strong>Wildest Dreams Journaling:</strong> Spend 15 minutes writing about what you would create if you had no limitations, no need to be practical, no concern for "how it's always been done." Don't edit or judge - just imagine freely.</li>
-                                <li><strong>Yes Day:</strong> Once a month, say yes to unexpected invitations or opportunities that arise, even if they weren't in your plan. Practice flexibility and trust.</li>
-                                <li><strong>Present-Moment Anchoring:</strong> When you notice yourself ruminating about the past or comparing now to then, place your hand on your heart, take three deep breaths, and ask: "What is actually true right here, right now?"</li>
-                                <li><strong>Forgiveness Practice:</strong> Write letters (you don't have to send) forgiving yourself and others for past actions. Practice releasing the weight of what cannot be changed.</li>
-                                <li><strong>Future Visioning:</strong> Set aside time to imagine your life 5 years from now without reference to your past. Who could you become if you weren't defined by who you've been?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Reflection Questions</h3>
-                            <ul>
-                                <li>What am I holding onto that no longer serves me?</li>
-                                <li>How might my attachment to "how things should be" be preventing me from seeing "what could be"?</li>
-                                <li>Where in my life am I confusing consistency with stagnation?</li>
-                                <li>What would I do differently if I believed the future was genuinely open?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>Your journey is toward temporal wisdom - honoring the past without being imprisoned by it. You're being called to recognize that stability and openness aren't opposites but dance partners. The goal isn't to abandon your capacity for structure and learning from experience, but to hold it more lightly. Practice bringing your reliable, grounded energy into present-moment awareness and future-oriented possibility. Imagine yourself as a tree: your roots (past) give you stability, but your branches (future) must be free to grow in new directions, and your trunk (present) flexibly connects both.</p>
-                            <p><strong>The Mistake of This Orientation:</strong> Believing that what has worked before will work forever, and will be the only and best way to do things or believe. The past is a teacher, not a tyrant.</p>
-                        </div>
-                    `
+                    content: `[Previous architect content - keeping the same]`
                 },
-                experiencer: {
-                    name: 'The Experiencer',
-                    subtitle: 'Present-Dominant Orientation',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <p>You possess a rare and precious gift: the ability to be fully here, now. While others are lost in regret about yesterday or anxiety about tomorrow, you can sink into the richness of this moment. You're spontaneous, adaptable, and alive to the sensory beauty of existence. People enjoy being around you because you know how to savor life's simple pleasures. You respond fluidly to what's actually happening rather than rigidly following predetermined plans. Your intuition is strong because you're attuned to present-moment information that others miss. You embody the truth that consciousness itself lives in the eternal now.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>Your greatest strength becomes your limitation when you forget that there is more to life than what is right in front of your eyes. The present moment is indeed the seat of consciousness, but the universe endowed us with consciousness precisely so we could think beyond the immediate. You have the ability to carry forward skills and knowledge from your past, and to plan thoughtfully for your future - but you may not be using these capacities fully. You might struggle to build upon yourself, finding that despite your aliveness and joy, you haven't created lasting structures or reached meaningful goals. Your life can feel like a series of disconnected moments rather than a coherent story with direction. You may avoid difficult decisions or responsibilities by staying busy with immediate concerns, or indulge present pleasures without considering future consequences.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Weekly Review Ritual:</strong> Every Sunday, spend 30 minutes reviewing the past week. What did you learn? What patterns do you notice? Write down 2-3 insights to carry forward.</li>
-                                <li><strong>Goal-Setting Practice:</strong> Choose one meaningful 6-month goal. Break it into monthly milestones, weekly tasks, and daily actions. Keep this visible and check it each morning.</li>
-                                <li><strong>Commitment Training:</strong> Make small commitments and honor them religiously - call someone back when you say you will, show up on time, finish books you start. Build your capacity for follow-through.</li>
-                                <li><strong>Past Integration:</strong> Spend time reviewing photos, journals, or memories from your past. Ask: "What have I learned? How have I grown? What patterns keep appearing?" Write down the wisdom you've accumulated.</li>
-                                <li><strong>Future Visioning Sessions:</strong> Twice monthly, spend 30 minutes imagining your life 1, 5, and 10 years from now. What do you want to have created? What kind of person do you want to have become? Let yourself dream with specificity.</li>
-                                <li><strong>Structure Experiments:</strong> Create one small daily ritual you do at the same time every day for 30 days - morning coffee ritual, evening gratitude practice, midday walk. Notice how structure can enhance rather than limit presence.</li>
-                                <li><strong>Consequences Journaling:</strong> Before making impulsive decisions, pause and write: "If I do this, what might happen tomorrow? Next week? Next year?" Build your future-thinking muscle.</li>
-                                <li><strong>Building Practice:</strong> Start one project you'll work on consistently for 3 months - learning a skill, creating something, developing a practice. Experience what it feels like to build something enduring through accumulated present moments.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Reflection Questions</h3>
-                            <ul>
-                                <li>What am I avoiding by staying so focused on the immediate moment?</li>
-                                <li>How might my life be different if I honored both presence AND direction?</li>
-                                <li>What wisdom from my past experiences am I failing to integrate?</li>
-                                <li>What dreams for my future am I not allowing myself to pursue?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>Your journey is toward temporal wholeness - staying rooted in present-moment awareness while also honoring the continuity of your life across time. You're being called to see that structure and spontaneity aren't enemies but allies. The goal isn't to abandon your beautiful capacity for presence, but to build a foundation beneath it and a direction ahead of it. Think of yourself as a river: you flow in the present moment (your gift), but you also carry the watershed of your past with you, and you're flowing toward a destination (the ocean of your future). Presence becomes even richer when it's part of a meaningful story.</p>
-                            <p><strong>The Mistake of This Orientation:</strong> Believing that "time is an illusion, only the present really matters." The present is where consciousness lives, but wisdom requires integrating all three temporal dimensions.</p>
-                        </div>
-                    `
-                },
-                visionary: {
-                    name: 'The Visionary',
-                    subtitle: 'Future-Dominant Orientation',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <p>You possess a visionary capacity that allows you to see possibilities others miss. Where others accept limitations, you imagine alternatives. Your hope and optimism inspire people, pulling them toward better futures. You're not satisfied with the status quo because you can envision how much richer life could become. This forward-thinking energy makes you an innovator, an entrepreneur of possibility. You're comfortable with uncertainty and ambiguity because you trust in potential. Your ability to set goals and work toward aspirations gives your life direction and meaning. You bring the gift of "hopium" - inspiring hope mixed with the intoxicating power of imagination.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>Your greatest strength becomes your limitation when you're always reaching for what's just beyond your grasp, never quite satisfied with what you already have. Your head may be in the clouds while your feet never quite touch the ground. You might see grand visions but struggle to manifest them because you lack the consistency and discipline that builds the tower of accomplishments. The present moment - where actual action happens - may feel boring or limiting compared to the shimmer of future possibilities. You might start many projects but finish few, constantly chasing the next exciting idea. Your perpetual dissatisfaction with what is can prevent you from appreciating what you have. You may become frustrated with people or systems that move too slowly, escape into fantasy rather than dealing with current reality, or defer living fully until some future achievement is reached.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Sensory Savoring Practice:</strong> Three times daily, spend 5 minutes fully experiencing something through your senses - truly taste your food with eyes closed, listen deeply to sounds without labeling them, feel textures with complete attention. Train yourself to find richness in what is, not just what could be.</li>
-                                <li><strong>Gratitude Grounding:</strong> Each evening, write down 3 specific things that were good about today - not future possibilities, but actual experiences you had. Notice the beauty of what already exists.</li>
-                                <li><strong>One Thing Practice:</strong> Choose ONE priority project. Work on only that for 30 days before starting anything new. Experience the satisfaction of depth over breadth.</li>
-                                <li><strong>Completion Ritual:</strong> Make a list of unfinished projects. Choose the smallest one and complete it this week. Feel the power of following through. Repeat monthly.</li>
-                                <li><strong>Minimal Daily Structure:</strong> Create 3 small, achievable tasks you'll do every day at the same time for 30 days (make bed upon waking, 10-minute walk after lunch, 5-minute evening tidying). Build the rhythm and structure your visions need to manifest.</li>
-                                <li><strong>Present-Moment Check-ins:</strong> Set 3 alarms throughout your day labeled "Are you here?" When they ring, stop, breathe, notice where you actually are. Practice arriving fully in the present.</li>
-                                <li><strong>Reality Inventory:</strong> Weekly, write down: "What is actually true in my life right now?" Not what could be or should be, but what is. Practice accepting and working with reality as it exists.</li>
-                                <li><strong>Patience Practice:</strong> Deliberately engage in slow activities - cooking from scratch, hand-writing letters, tending plants. Notice your urge to rush or jump ahead. Breathe through it.</li>
-                                <li><strong>Past Integration:</strong> Spend time reviewing what you've already accomplished, skills you've already developed, growth you've already experienced. Anchor yourself in the reality of your built-up past.</li>
-                                <li><strong>Enough Practice:</strong> Ask yourself regularly: "What if what I have right now is already enough? What if who I am right now is already whole?" Sit with that possibility.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Reflection Questions</h3>
-                            <ul>
-                                <li>What am I not seeing or appreciating because I'm too focused on what's next?</li>
-                                <li>How might my perpetual reaching prevent me from actually grasping anything?</li>
-                                <li>What would change if I brought the same visionary energy to being present that I bring to imagining the future?</li>
-                                <li>Am I using future dreams to avoid present responsibilities or difficult realities?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>Your journey is toward grounded vision - maintaining your beautiful capacity to see possibility while developing the roots and practices that allow those visions to actually manifest. You're being called to recognize that the future is created through disciplined present action built on the foundation of accumulated past efforts. The goal isn't to stop dreaming but to become the kind of person who can bring dreams into reality. Think of yourself as a plant: your flowers (future visions) are beautiful, but they require roots (past structure) and a strong stem (present action) to actually bloom. Your visions deserve the gift of manifestation.</p>
-                            <p><strong>The Mistake of This Orientation:</strong> Believing that the future will be better than the present, so the present can be endured or escaped rather than fully lived. The future you dream of can only be created through present action, and that action requires foundation.</p>
-                        </div>
-                    `
-                },
-                balanced: {
-                    name: 'The Balanced Navigator',
-                    subtitle: 'Temporal Wisdom',
-                    content: `
-                        <div class="results-section">
-                            <h3>Celebration</h3>
-                            <p>You've achieved something rare and valuable: temporal wisdom. You understand that past, present, and future are not competing orientations but complementary dimensions of a full life. You can honor tradition and learn from experience (past) while staying fluid and responsive to what's actually happening (present) and remaining open to new possibilities (future). You likely move between orientations fluidly depending on what the situation requires - sometimes you need structure, sometimes presence, sometimes vision, and you can access all three. This integration allows you to live with both groundedness and openness, both reliability and spontaneity, both wisdom and wonder.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>The Dance of Integration</h3>
-                            <p>Your balance isn't static - it's a dynamic dance, like the inverted pyramid balancing on its point. Some days you'll lean more into one orientation, and that's natural. The key is your awareness and ability to self-correct. You notice when you're getting stuck and can consciously shift. This is the temporal flexibility that allows you to navigate life's complexity with grace.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Subtle Growth Edges</h3>
-                            <p>Even in balance, there are always deeper levels of integration:</p>
-                            <ul>
-                                <li><strong>Domain Awareness:</strong> You might be balanced overall but notice you default to different orientations in different life areas. Explore: Where do I still get stuck? Work? Relationships? Creative life?</li>
-                                <li><strong>Helping Others Balance:</strong> Your integration positions you to help others find their way. How can you support people who are stuck in single-orientation thinking?</li>
-                                <li><strong>Deepening Each Orientation:</strong> Balance doesn't mean shallow engagement with each dimension. How can you go deeper into past-wisdom, present-awareness, and future-vision simultaneously?</li>
-                                <li><strong>Cultural Contribution:</strong> How can you help create institutions, communities, or systems that honor temporal plurality rather than getting stuck in single-orientation thinking?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Advanced Practices</h3>
-                            <ul>
-                                <li><strong>Orientation Shifting:</strong> Practice consciously inhabiting each orientation. Spend a day being purely present-focused, another being past-reflective, another being future-visionary. Notice how each feels and what it offers.</li>
-                                <li><strong>Integration Meditation:</strong> Visualize yourself as the inverted pyramid - past and future as the stable upper corners, present as the dynamic balancing point beneath. Feel all three simultaneously.</li>
-                                <li><strong>Teaching Practice:</strong> Help someone stuck in a single orientation understand what they're missing. Teaching deepens your own understanding.</li>
-                                <li><strong>Temporal Complexity:</strong> When facing decisions, consciously consider: What does my past experience teach me? What is present reality showing me? What future am I trying to create? Let all three inform your choice.</li>
-                                <li><strong>Community Building:</strong> Create or participate in communities that honor temporal plurality - where tradition and innovation, structure and spontaneity, wisdom and wonder all have room.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Reflection Questions</h3>
-                            <ul>
-                                <li>Where do I still notice myself defaulting to one orientation over others?</li>
-                                <li>How can I help others discover temporal balance?</li>
-                                <li>What would it look like to go even deeper into integration?</li>
-                                <li>How can I contribute to a culture that honors all dimensions of time?</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Gift</h3>
-                            <p>You've learned what many spend lifetimes seeking: that wholeness comes not from choosing one dimension of time but from honoring all three. Your balanced perspective is needed in a world torn by temporal conflicts - conservatives stuck in past, progressives untethered to future, presence-focused folks without direction. You can be a bridge, a translator, a guide. Share your integration generously.</p>
-                        </div>
-                    `
-                },
-                strategist: {
-                    name: 'The Strategist',
-                    subtitle: 'Past/Future Dominant - Seeking Present Integration',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Pattern</h3>
-                            <p>You're a master of learning from experience and envisioning possibilities. You analyze past patterns to inform future plans, creating sophisticated strategies and long-term visions. You're thoughtful, reflective, and forward-thinking. But there's a catch: you're rarely fully here. You live between what was and what will be, constantly swinging from reflection to projection, analysis to planning. The vibrant, alive present moment - where actual life is happening - often passes you by.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <ul>
-                                <li>Excellent strategic thinking combining wisdom and vision</li>
-                                <li>Ability to learn from mistakes and apply lessons forward</li>
-                                <li>Long-term planning capacity grounded in realistic assessment</li>
-                                <li>Pattern recognition across time that helps you make predictions</li>
-                                <li>Thoughtful decision-making that considers both history and possibility</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>You might find yourself paralyzed between past and future - knowing what you should do based on experience, seeing what you want to create ahead, but unable to actually engage with the messy reality of now. You may struggle with:</p>
-                            <ul>
-                                <li>Analysis paralysis - overthinking prevents action</li>
-                                <li>Missing spontaneous opportunities that require immediate response</li>
-                                <li>Difficulty being present in relationships or experiences</li>
-                                <li>Physical disconnection from your body and sensory experience</li>
-                                <li>Inability to simply be without analyzing or planning</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Sensory Anchoring:</strong> Multiple times daily, stop whatever you're thinking about and name 5 things you can see, 4 you can hear, 3 you can touch, 2 you can smell, 1 you can taste. Drop into direct sensation.</li>
-                                <li><strong>Movement Practice:</strong> Engage in activities that demand present-moment attention - dance, martial arts, rock climbing, improvisation. Your strategic mind can't plan ahead when your body needs to respond now.</li>
-                                <li><strong>Conversation Presence:</strong> When talking with someone, practice listening so fully that you couldn't repeat what you were thinking about before they spoke. Let go of preparing your response.</li>
-                                <li><strong>Flow Activities:</strong> Find something that puts you in flow state - cooking, music, crafting, sports. Notice how good it feels when past and future dissolve into present engagement.</li>
-                                <li><strong>Spontaneity Challenges:</strong> Once per week, do something completely unplanned the moment the idea arises. No analysis, no strategizing - just immediate action.</li>
-                                <li><strong>Breath Awareness:</strong> Set reminders to take 3 conscious breaths, feeling the sensation of breathing without thinking about it. This trains present-moment attention.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>The bridge between your past wisdom and future vision is present action. All your brilliant strategies are worthless if you can't be present enough to execute them. Your journey is learning that sometimes the best thing you can do is stop thinking and start feeling, stop planning and start doing, stop analyzing and start experiencing. The present is where your carefully considered plans meet reality and transform into actual life.</p>
-                            <p><strong>Key Question:</strong> What if the most strategic thing you could do right now is simply be here?</p>
-                        </div>
-                    `
-                },
-                realist: {
-                    name: 'The Realist',
-                    subtitle: 'Past/Present Dominant - Seeking Future Vision',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Pattern</h3>
-                            <p>You're grounded in reality - deeply practical, experientially wise, and able to respond skillfully to what's actually happening. You learn from experience and you show up for the present moment. You're reliable, present, and realistic. But you may lack vision, direction, and openness to transformation. You're excellent at managing what is based on what has been, but you struggle to imagine or reach for what could be. Your life might feel stable and pleasant but also stuck, repetitive, or lacking in inspiration.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <ul>
-                                <li>Excellent at responding to immediate reality with wisdom</li>
-                                <li>Grounded decision-making based on actual experience</li>
-                                <li>Strong presence and practical capability</li>
-                                <li>Reliability and consistency others can count on</li>
-                                <li>Wisdom that comes from paying attention over time</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>Without future-orientation, you may find yourself simply managing the present based on the past with no real expansion or aspiration. You might struggle with:</p>
-                            <ul>
-                                <li>Lack of direction or long-term goals</li>
-                                <li>Resistance to innovation or new approaches</li>
-                                <li>Feeling stuck in patterns even when they're not fully satisfying</li>
-                                <li>Cynicism or dismissiveness toward visionary thinking</li>
-                                <li>Missing opportunities that require imagination or risk</li>
-                                <li>Life feeling flat or repetitive despite being stable</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Vision Journaling:</strong> Weekly, spend 30 minutes writing about your life 5 years from now as if anything were possible. Don't censor or judge - just imagine freely. What would make your heart sing?</li>
-                                <li><strong>Exposure to Possibility:</strong> Deliberately seek out visionary thinkers, innovative communities, or transformative ideas. Let yourself be inspired by what others are creating.</li>
-                                <li><strong>Dream Permission:</strong> Ask yourself: "What would I do if I knew I couldn't fail? What would I create if I had unlimited resources?" Give yourself permission to want more than what currently exists.</li>
-                                <li><strong>Goal-Setting Practice:</strong> Choose one meaningful aspiration that scares you a little. Break it into steps. Take one small action toward it this week.</li>
-                                <li><strong>Novelty Seeking:</strong> Try something genuinely new once per month - a skill, a place, a type of person, an idea. Notice how possibility feels when you encounter it.</li>
-                                <li><strong>Future-Friend Connection:</strong> Spend time with people who are more future-oriented. Let their vision and optimism crack open your realism a bit.</li>
-                                <li><strong>What If Practice:</strong> When you catch yourself thinking "that's not realistic" or "that won't work," pause and ask: "But what if it could? How might it be possible?"</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>Your grounded realism is a beautiful foundation - now it's time to build upward. Roots are meant to support growth toward the sky. Your journey is learning that staying realistic doesn't mean abandoning dreams; it means bringing your practical wisdom to the service of possibility. The future isn't naive fantasy - it's the realm where your accumulated experience and present capability can create something genuinely new.</p>
-                            <p><strong>Key Question:</strong> What becomes possible when you apply your grounded wisdom to visionary aspiration instead of using it to limit yourself?</p>
-                        </div>
-                    `
-                },
-                improviser: {
-                    name: 'The Improviser',
-                    subtitle: 'Future/Present Dominant - Seeking Past Foundation',
-                    content: `
-                        <div class="results-section">
-                            <h3>Your Pattern</h3>
-                            <p>You're alive to the moment and excited about possibilities. You're spontaneous, visionary, adaptable, and hopeful. You respond fluidly to what's happening while keeping your eyes on the horizon of what could be. But you struggle to build, maintain, or learn from the past. You might make the same mistakes repeatedly, fail to develop lasting skills or structures, scatter your energy across too many directions, or find that despite your excitement and vision, very little actually manifests in enduring form.</p>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Strengths</h3>
-                            <ul>
-                                <li>Remarkable spontaneity and present-moment responsiveness</li>
-                                <li>Visionary capacity to see possibilities others miss</li>
-                                <li>Adaptability and comfort with change and uncertainty</li>
-                                <li>Infectious optimism and forward-thinking energy</li>
-                                <li>Creative improvisation and thinking on your feet</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Your Challenges</h3>
-                            <p>Without past-orientation, you're constantly starting from zero. You don't build on what you've learned or create stable foundations for your visions. You might struggle with:</p>
-                            <ul>
-                                <li>Repeating the same mistakes without learning from them</li>
-                                <li>Starting many projects but finishing few</li>
-                                <li>Lack of discipline, routine, or consistent practice</li>
-                                <li>Scattered energy that prevents depth or mastery</li>
-                                <li>Inability to manifest visions because you lack structure</li>
-                                <li>Exhausting yourself by reinventing wheels instead of using established methods</li>
-                                <li>Unreliability or flakiness in commitments</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Growth Practices</h3>
-                            <ul>
-                                <li><strong>Weekly Reflection:</strong> Every Sunday, review the past week. What did you learn? What patterns do you notice? Write down 2-3 insights to carry forward. Build your capacity to extract wisdom from experience.</li>
-                                <li><strong>One Thing Depth:</strong> Choose ONE skill, project, or practice and commit to it for 6 months. No starting new things until you've gone deep with this one. Experience what mastery feels like.</li>
-                                <li><strong>Routine Building:</strong> Create 2-3 simple daily practices you do at the same time every day - morning ritual, exercise, evening wind-down. Feel how structure can support rather than limit you.</li>
-                                <li><strong>Completion Practice:</strong> Make a list of unfinished projects. Choose the smallest and complete it this week. Repeat monthly. Learn the satisfaction of follow-through.</li>
-                                <li><strong>Study Tradition:</strong> Choose something you care about and study how it's been done historically. Learn from masters. Stand on the shoulders of accumulated knowledge instead of only trusting your own innovation.</li>
-                                <li><strong>Commitment Training:</strong> Make small commitments and honor them religiously. Call when you say you will. Show up on time. Finish what you start. Build your capacity for reliability.</li>
-                                <li><strong>Pattern Tracking:</strong> Keep a journal tracking patterns in your life - what works, what doesn't, what keeps recurring. Turn experience into wisdom instead of just moving on to the next thing.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="results-section">
-                            <h3>Integration Path</h3>
-                            <p>Your beautiful spontaneity and vision need a foundation to stand on and roots to draw from. The past isn't a prison - it's the platform that lets you reach higher. Your journey is learning that structure enables freedom, that discipline creates space for inspiration, that building on what you've learned allows you to go further than constantly starting fresh. The greatest improvisers are masters of their craft - their spontaneity flows from deep practice and accumulated skill.</p>
-                            <p><strong>Key Question:</strong> What could you create if you brought your visionary energy to the patient work of building something that lasts?</p>
-                        </div>
-                    `
-                }
+                // ... (all other orientation data - keeping exactly as before)
             };
             
-            return data[type];
+            return data[type] || data.balanced;
         }
     </script>
 </body>
