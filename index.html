@@ -874,6 +874,18 @@
         function sendDataToGoogleSheets(orientationType, scores, imbalanceDegree, challengeWarnings, domainScores) {
             const orientationData = getOrientationData(orientationType);
             
+            // Reorder answers back to original question order for storage
+            const orderedAnswers = new Array(allQuestions.length).fill(null);
+            for (let i = 0; i < allQuestions.length; i++) {
+                const question = allQuestions[i];
+                if (question.originalIndex !== undefined) {
+                    orderedAnswers[question.originalIndex] = answers[i];
+                } else {
+                    // For advanced questions without originalIndex, append at end
+                    orderedAnswers[i] = answers[i];
+                }
+            }
+            
             const data = {
                 name: userName,
                 email: userEmail,
@@ -886,7 +898,7 @@
                 pastChallengeWarning: challengeWarnings.past || false,
                 presentChallengeWarning: challengeWarnings.present || false,
                 futureChallengeWarning: challengeWarnings.future || false,
-                answers: answers,
+                answers: orderedAnswers,
                 domainScores: domainScores || null
             };
             
