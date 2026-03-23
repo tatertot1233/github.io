@@ -756,6 +756,12 @@
             const futureChallengeIndices = [55, 56, 57, 58, 59];
             
             // Calculate scores using the question's type property
+            console.log('First 5 questions being scored:');
+            for (let i = 0; i < Math.min(5, allQuestions.length); i++) {
+                const q = allQuestions[i];
+                console.log(`Q${i}: originalIndex=${q.originalIndex}, type=${q.type}, answer=${answers[i]}, text="${q.text.substring(0, 50)}..."`);
+            }
+            
             for (let i = 0; i < allQuestions.length; i++) {
                 const question = allQuestions[i];
                 const answer = answers[i];
@@ -793,6 +799,8 @@
                 futureScore, futureCount,
                 totalAnswers: allQuestions.length
             });
+            
+            alert('DEBUG - Scores:\nPast: ' + pastScore + ' (from ' + pastCount + ' questions)\nPresent: ' + presentScore + ' (from ' + presentCount + ' questions)\nFuture: ' + futureScore + ' (from ' + futureCount + ' questions)');
             
             const totalScore = pastScore + presentScore + futureScore;
             
@@ -882,16 +890,23 @@
             const orientationData = getOrientationData(orientationType);
             
             // Reorder answers back to original question order for storage
-            const orderedAnswers = new Array(allQuestions.length).fill(null);
+            const totalMainQuestions = 60;
+            const totalAdvancedQuestions = 50;
+            const totalQuestions = quizType === 'advanced' ? totalMainQuestions + totalAdvancedQuestions : totalMainQuestions;
+            
+            const orderedAnswers = new Array(totalQuestions).fill(null);
+            
             for (let i = 0; i < allQuestions.length; i++) {
                 const question = allQuestions[i];
-                if (question.originalIndex !== undefined) {
-                    orderedAnswers[question.originalIndex] = answers[i];
-                } else {
-                    // For advanced questions without originalIndex, append at end
-                    orderedAnswers[i] = answers[i];
+                const answer = answers[i];
+                
+                if (question.originalIndex !== undefined && question.originalIndex < totalQuestions) {
+                    orderedAnswers[question.originalIndex] = answer;
                 }
             }
+            
+            console.log('Original answers (randomized order):', answers);
+            console.log('Reordered answers (original order):', orderedAnswers);
             
             const data = {
                 name: userName,
