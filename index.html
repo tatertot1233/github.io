@@ -787,6 +787,13 @@
                 }
             }
             
+            console.log('Score calculation:', {
+                pastScore, pastCount,
+                presentScore, presentCount,
+                futureScore, futureCount,
+                totalAnswers: allQuestions.length
+            });
+            
             const totalScore = pastScore + presentScore + futureScore;
             
             // Use raw scores for comparison and display
